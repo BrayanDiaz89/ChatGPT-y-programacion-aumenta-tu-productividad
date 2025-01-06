@@ -1,10 +1,7 @@
 package med.voll.api.domain.paciente.dto;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import med.voll.api.domain.direccion.DatosDireccion;
 
 
@@ -18,8 +15,9 @@ public record DatosRegistroPaciente(
         @NotBlank
         @Size(min = 0, max = 15)
         String telefono,
-
-        //@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")
+        //@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}") código de la clase
+        //Código nuevo. Expresión regular para documento identidad colombiano, por chatgpt
+        @Pattern(regexp = "^\\d{6,10}(-\\d{1})?$", message = "El documento debe tener de 6 a 10 dígitos, opcionalmente seguido de un guion y un dígito.")
         @NotBlank
         String documento,
 
