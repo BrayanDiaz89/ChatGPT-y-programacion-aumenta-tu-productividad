@@ -3,6 +3,7 @@ package med.voll.api.controller;
 
 import jakarta.validation.Valid;
 import med.voll.api.domain.consulta.AgendaDeConsultaService;
+import med.voll.api.domain.consulta.ConsultaRepository;
 import med.voll.api.domain.consulta.dto.DatosAgendarConsulta;
 import med.voll.api.domain.consulta.dto.DatosCancelamientoConsulta;
 import med.voll.api.domain.consulta.dto.DatosDetalleConsulta;
@@ -30,6 +31,9 @@ public class ConsultaController {
     @Autowired
     private AgendaDeConsultaService service;
 
+    @Autowired
+    private ConsultaRepository consultaRepository;
+
     @GetMapping
     public ResponseEntity<Page<DatosDetalleConsulta>> listar(@PageableDefault(size = 10, sort = {"fecha"}) Pageable paginacion) {
         var response = service.consultar(paginacion);
@@ -52,8 +56,10 @@ public class ConsultaController {
 
     @GetMapping("/relatorio-mensual/{mes}")
     public ResponseEntity<List<DatosRelatoriosConsultaMensual>> generarRelatorioConsultaMensual(@PathVariable YearMonth mes) {
-        //var relatorio = consultaRepository.?
-        return ResponseEntity.ok(null);
+        int monthValue = mes.getMonthValue();  // Obtener el mes (1-12)
+        int year = mes.getYear();           // Obtener el año
+        List<DatosRelatoriosConsultaMensual> relatorio = consultaRepository.buscarConsultasPorMes(year, monthValue);
+        return ResponseEntity.ok(relatorio);
     }
 
 }

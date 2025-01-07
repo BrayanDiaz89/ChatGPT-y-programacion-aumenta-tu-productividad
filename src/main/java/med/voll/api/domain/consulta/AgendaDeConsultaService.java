@@ -79,7 +79,7 @@ public class AgendaDeConsultaService {
         if(datos.especialidad()==null){
             throw new ValidacionDeIntegridad("debe seleccionarse una especialidad para el medico");
         }
-       return medicoRepository.seleccionarMedicoConEspecialidadEnFecha(datos.especialidad(),datos.fecha());
+        return medicoRepository.seleccionarMedicoConEspecialidadEnFecha(datos.especialidad(),datos.fecha());
     }
 
     public Page<DatosDetalleConsulta> consultar(Pageable paginacion) {
