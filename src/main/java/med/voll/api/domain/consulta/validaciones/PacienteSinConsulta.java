@@ -13,6 +13,13 @@ public class PacienteSinConsulta implements ValidadorDeConsultas{
     private ConsultaRepository repository;
 
     public void validar(DatosAgendarConsulta datos)  {
+        if (datos == null) {
+            throw new ValidationException("Los datos de la consulta no pueden ser nulos");
+        }
+        // Validar que la fecha no sea nula
+        if (datos.fecha() == null) {
+            throw new ValidationException("La fecha de la consulta no puede ser nula");
+        }
         var primerHorario = datos.fecha().withHour(7);
         var ultimoHorario= datos.fecha().withHour(18);
 
